@@ -3,8 +3,10 @@ const bodyParser = require('body-parser');
 const { errorMiddleware } = require('./middlewares/errorMiddleware');
 const { userValidate, invalidToken } = require('./middlewares/userValidate');
 const { loginValidate } = require('./middlewares/loginValidate');
+const { categorieValidate } = require('./middlewares/categorieValidate');
 const controllerUser = require('./controllers/controllerUser');
 const controllerLogin = require('./controllers/controllerLogin');
+const controllerCategory = require('./controllers/controllerCategory');
 
 const app = express();
 app.use(bodyParser.json());
@@ -13,6 +15,7 @@ app.get('/user', invalidToken, controllerUser.getAll);
 app.get('/user/:id', invalidToken, controllerUser.getById);
 app.post('/user', userValidate, controllerUser.create);
 app.post('/login', loginValidate, controllerLogin.login);
+app.post('/categories', invalidToken, categorieValidate, controllerCategory.create);
 
 app.use(errorMiddleware);
 
