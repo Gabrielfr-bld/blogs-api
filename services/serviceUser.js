@@ -17,7 +17,14 @@ const emailExists = async ({ email }) => {
   return receivedEmail;
 };
 
+const getAll = async () => {
+  const allUsers = await User.findAll();
+
+  return allUsers;
+};
+
 module.exports = {
   create,
   emailExists,
+  getAll,
 };

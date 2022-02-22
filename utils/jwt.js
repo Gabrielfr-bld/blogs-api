@@ -13,6 +13,13 @@ const jwt = require('jsonwebtoken');
   return token;
 };
 
+const verifyToken = (token) => {
+  const payload = jwt.verify(token, process.env.JWT_SECRET);
+
+  return payload;
+};
+
 module.exports = {
   createToken,
+  verifyToken,
 };
