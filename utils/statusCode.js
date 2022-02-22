@@ -5,4 +5,5 @@ module.exports = {
   conflictCode: 409,
   okCode: 200,
   unauthorizedCode: 401,
+  notFoundCode: 404,
 };

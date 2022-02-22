@@ -23,8 +23,15 @@ const getAll = async () => {
   return allUsers;
 };
 
+const getById = async ({ id }) => {
+  const user = await User.findByPk(id);
+
+  return user;
+};
+
 module.exports = {
   create,
   emailExists,
   getAll,
+  getById,
 };

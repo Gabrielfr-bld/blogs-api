@@ -5,4 +5,5 @@ module.exports = {
   loginInvalid: { message: 'Invalid fields' },
   tokenInvalid: { message: 'Expired or invalid token' },
   tokenNotFound: { message: 'Token not found' },
+  userNotExist: { message: 'User does not exist' },
 };

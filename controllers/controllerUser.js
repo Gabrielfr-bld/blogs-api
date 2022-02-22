@@ -1,7 +1,7 @@
 const serviceUser = require('../services/serviceUser');
 const { createToken } = require('../utils/jwt');
-const { createdCode, conflictCode, okCode } = require('../utils/statusCode');
-const { userRegister } = require('../utils/messages');
+const { createdCode, conflictCode, okCode, notFoundCode } = require('../utils/statusCode');
+const { userRegister, userNotExist } = require('../utils/messages');
 
 const create = async (req, res, next) => {
   try {
@@ -38,7 +38,24 @@ const getAll = async (_req, res, next) => {
   }
 };
 
+const getById = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const user = await serviceUser.getById({ id });
+
+    if (!user) {
+      return res.status(notFoundCode).json(userNotExist);
+    }
+
+    return res.status(okCode).json(user);
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
+  getById,
 };
