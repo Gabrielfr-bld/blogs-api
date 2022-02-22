@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 
 app.get('/user', invalidToken, controllerUser.getAll);
 app.get('/user/:id', invalidToken, controllerUser.getById);
+app.get('/categories', invalidToken, controllerCategory.getAll);
 app.post('/user', userValidate, controllerUser.create);
 app.post('/login', loginValidate, controllerLogin.login);
 app.post('/categories', invalidToken, categorieValidate, controllerCategory.create);
