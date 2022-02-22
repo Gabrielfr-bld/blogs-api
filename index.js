@@ -1,13 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { userValidate } = require('./middlewares/userValidate');
-const controllerUser = require('./controllers/controllerUser');
 const { errorMiddleware } = require('./middlewares/errorMiddleware');
+const { userValidate } = require('./middlewares/userValidate');
+const { loginValidate } = require('./middlewares/loginValidate');
+const controllerUser = require('./controllers/controllerUser');
+const controllerLogin = require('./controllers/controllerLogin');
 
 const app = express();
 app.use(bodyParser.json());
 
 app.post('/user', userValidate, controllerUser.create);
+app.post('/login', loginValidate, controllerLogin.login);
 
 app.use(errorMiddleware);
 
