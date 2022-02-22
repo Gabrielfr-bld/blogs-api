@@ -1,6 +1,15 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const { userValidate } = require('./middlewares/userValidate');
+const controllerUser = require('./controllers/controllerUser');
+const { errorMiddleware } = require('./middlewares/errorMiddleware');
 
 const app = express();
+app.use(bodyParser.json());
+
+app.post('/user', userValidate, controllerUser.create);
+
+app.use(errorMiddleware);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
