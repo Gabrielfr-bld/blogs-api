@@ -2,7 +2,7 @@ const serviceBlogPost = require('../services/serviceBlogPost');
 const serviceCategory = require('../services/serviceCategory');
 const { decodeToken } = require('../utils/jwt');
 const { idCategoryNotFoun } = require('../utils/messages');
-const { badRequestCode, createdCode } = require('../utils/statusCode');
+const { badRequestCode, createdCode, okCode } = require('../utils/statusCode');
 
 const create = async (req, res, next) => {
   try {
@@ -30,6 +30,17 @@ const create = async (req, res, next) => {
   }
 };
 
+const getAll = async (_req, res, next) => {
+  try {
+    const allPosts = await serviceBlogPost.getAll();
+
+    return res.status(okCode).json(allPosts);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
+  getAll,
 };
