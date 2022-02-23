@@ -6,4 +6,5 @@ module.exports = {
   okCode: 200,
   unauthorizedCode: 401,
   notFoundCode: 404,
+  noContentCode: 204,
 };

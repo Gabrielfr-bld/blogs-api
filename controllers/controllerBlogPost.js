@@ -8,7 +8,8 @@ const {
   createdCode, 
   okCode, 
   notFoundCode, 
-  unauthorizedCode, 
+  unauthorizedCode,
+  noContentCode, 
 } = require('../utils/statusCode');
 
 const create = async (req, res, next) => {
@@ -90,9 +91,27 @@ const update = async (req, res, next) => {
   }
 };
 
+const deletePost = async (req, res, next) => {
+  try {
+    const { authorization } = req.headers;
+    const { id } = req.params;
+
+    const delPost = await serviceBlogPost.deletePost({ id, authorization });
+
+    if (delPost.status) {
+      return res.status(delPost.status).json(delPost.message);
+    }
+
+    return res.status(noContentCode).send();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  deletePost,
 };

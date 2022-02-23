@@ -23,7 +23,11 @@ app.post('/user', userValidate, controllerUser.create);
 app.post('/login', loginValidate, controllerLogin.login);
 app.post('/categories', invalidToken, categorieValidate, controllerCategory.create);
 app.post('/post', invalidToken, blogPostValidate, controllerBlogPost.create);
+
 app.put('/post/:id', blogPostUpdateValidate, invalidToken, controllerBlogPost.update);
+
+app.delete('/post/:id', invalidToken, controllerBlogPost.deletePost);
+
 app.use(errorMiddleware);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
