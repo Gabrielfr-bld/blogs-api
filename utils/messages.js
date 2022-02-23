@@ -8,4 +8,6 @@ module.exports = {
   userNotExist: { message: 'User does not exist' },
   idCategoryNotFoun: { message: '"categoryIds" not found' },
   postNotExist: { message: 'Post does not exist' },
+  canNotEdited: { message: 'Categories cannot be edited' },
+  unauthorizedUser: { message: 'Unauthorized user' },
 };

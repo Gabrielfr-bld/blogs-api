@@ -34,8 +34,25 @@ const getById = async ({ id }) => {
   return post;
 };
 
+const update = async ({ id, title, content, updated }) => {
+  await BlogPost.update({ title, content, updated }, { where: { id } });
+
+  const updatedPost = await BlogPost.findByPk(id, {
+    attributes: {
+      exclude: ['published', 'updated'],
+    },
+    include: {
+      model: Category,
+      as: 'categories',
+    },
+  }); 
+
+  return updatedPost;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };

@@ -8,7 +8,7 @@ const controllerUser = require('./controllers/controllerUser');
 const controllerLogin = require('./controllers/controllerLogin');
 const controllerCategory = require('./controllers/controllerCategory');
 const controllerBlogPost = require('./controllers/controllerBlogPost');
-const { blogPostValidate } = require('./middlewares/blogPostValidate');
+const { blogPostValidate, blogPostUpdateValidate } = require('./middlewares/blogPostValidate');
 
 const app = express();
 app.use(bodyParser.json());
@@ -23,7 +23,7 @@ app.post('/user', userValidate, controllerUser.create);
 app.post('/login', loginValidate, controllerLogin.login);
 app.post('/categories', invalidToken, categorieValidate, controllerCategory.create);
 app.post('/post', invalidToken, blogPostValidate, controllerBlogPost.create);
-
+app.put('/post/:id', blogPostUpdateValidate, invalidToken, controllerBlogPost.update);
 app.use(errorMiddleware);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

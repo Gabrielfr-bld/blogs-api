@@ -1,8 +1,15 @@
 const serviceBlogPost = require('../services/serviceBlogPost');
 const serviceCategory = require('../services/serviceCategory');
+const serviceUser = require('../services/serviceUser');
 const { decodeToken } = require('../utils/jwt');
-const { idCategoryNotFoun, postNotExist } = require('../utils/messages');
-const { badRequestCode, createdCode, okCode, notFoundCode } = require('../utils/statusCode');
+const { idCategoryNotFoun, postNotExist, unauthorizedUser } = require('../utils/messages');
+const { 
+  badRequestCode, 
+  createdCode, 
+  okCode, 
+  notFoundCode, 
+  unauthorizedCode, 
+} = require('../utils/statusCode');
 
 const create = async (req, res, next) => {
   try {
@@ -55,8 +62,37 @@ const getById = async (req, res, next) => {
   }
 };
 
+const update = async (req, res, next) => {
+  try {
+    const { id: idP } = req.params;
+    const { title, content } = req.body;
+    const { authorization } = req.headers;
+
+    const idPost = await serviceBlogPost.getById({ id: idP });
+
+    if (!idPost) {
+      return res.status(notFoundCode).json(postNotExist);
+    }
+
+    const decode = decodeToken(authorization);
+
+    const { dataValues: { id, email } } = await serviceUser.getById({ id: idPost.userId });
+
+    if (decode.userId !== id && decode.email !== email) {
+      return res.status(unauthorizedCode).json(unauthorizedUser);
+    }
+
+    const postUpdate = await serviceBlogPost.update({ id, title, content, updated: new Date() });
+
+    return res.status(okCode).json(postUpdate);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
