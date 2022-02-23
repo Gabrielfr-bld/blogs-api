@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { decodeToken } = require('../utils/jwt');
 
 const create = async ({ displayName, email, password, image }) => {
   const userCreate = await User.create({ 
@@ -29,9 +30,18 @@ const getById = async ({ id }) => {
   return user;
 };
 
+const deleteUser = async ({ authorization }) => {
+  const { userId, email } = decodeToken(authorization);
+
+  await User.destroy({ where: { id: userId, email } });
+
+  return true;
+};
+
 module.exports = {
   create,
   emailExists,
   getAll,
   getById,
+  deleteUser,
 };

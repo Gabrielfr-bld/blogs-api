@@ -1,6 +1,12 @@
 const serviceUser = require('../services/serviceUser');
 const { createToken } = require('../utils/jwt');
-const { createdCode, conflictCode, okCode, notFoundCode } = require('../utils/statusCode');
+const { 
+  createdCode, 
+  conflictCode, 
+  okCode, 
+  notFoundCode, 
+  noContentCode, 
+} = require('../utils/statusCode');
 const { userRegister, userNotExist } = require('../utils/messages');
 
 const create = async (req, res, next) => {
@@ -54,8 +60,21 @@ const getById = async (req, res, next) => {
   }
 };
 
+const deleteUser = async (req, res, next) => {
+  try {
+    const { authorization } = req.headers;
+
+    await serviceUser.deleteUser({ authorization });
+
+    return res.status(noContentCode).send();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  deleteUser,
 };

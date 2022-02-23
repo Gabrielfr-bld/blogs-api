@@ -27,6 +27,7 @@ app.post('/post', invalidToken, blogPostValidate, controllerBlogPost.create);
 app.put('/post/:id', blogPostUpdateValidate, invalidToken, controllerBlogPost.update);
 
 app.delete('/post/:id', invalidToken, controllerBlogPost.deletePost);
+app.delete('/user/me', invalidToken, controllerUser.deleteUser);
 
 app.use(errorMiddleware);
 
