@@ -17,6 +17,7 @@ app.get('/user', invalidToken, controllerUser.getAll);
 app.get('/user/:id', invalidToken, controllerUser.getById);
 app.get('/categories', invalidToken, controllerCategory.getAll);
 app.get('/post', invalidToken, controllerBlogPost.getAll);
+app.get('/post/:id', invalidToken, controllerBlogPost.getById);
 
 app.post('/user', userValidate, controllerUser.create);
 app.post('/login', loginValidate, controllerLogin.login);

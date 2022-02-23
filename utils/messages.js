@@ -7,4 +7,5 @@ module.exports = {
   tokenNotFound: { message: 'Token not found' },
   userNotExist: { message: 'User does not exist' },
   idCategoryNotFoun: { message: '"categoryIds" not found' },
+  postNotExist: { message: 'Post does not exist' },
 };
