@@ -7,6 +7,8 @@ const { categorieValidate } = require('./middlewares/categorieValidate');
 const controllerUser = require('./controllers/controllerUser');
 const controllerLogin = require('./controllers/controllerLogin');
 const controllerCategory = require('./controllers/controllerCategory');
+const controllerBlogPost = require('./controllers/controllerBlogPost');
+const { blogPostValidate } = require('./middlewares/blogPostValidate');
 
 const app = express();
 app.use(bodyParser.json());
@@ -17,6 +19,7 @@ app.get('/categories', invalidToken, controllerCategory.getAll);
 app.post('/user', userValidate, controllerUser.create);
 app.post('/login', loginValidate, controllerLogin.login);
 app.post('/categories', invalidToken, categorieValidate, controllerCategory.create);
+app.post('/post', invalidToken, blogPostValidate, controllerBlogPost.create);
 
 app.use(errorMiddleware);
 
